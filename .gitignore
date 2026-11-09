@@ -1,0 +1,54 @@
+# Maven: compiled files, reports and build output
+target/
+*.class
+.flattened-pom.xml
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse / VS Code
+.classpath
+.project
+.settings/
+.factorypath
+.vscode/
+
+# Logs and JVM crash dumps
+*.log
+logs/
+hs_err_pid*
+replay_pid*
+*.hprof
+
+# Local environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+application-local.yml
+application-local.yaml
+application-local.properties
+application-secret.yml
+application-secret.yaml
+application-secret.properties
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Operating systems
+.DS_Store
+Thumbs.db
+Desktop.ini

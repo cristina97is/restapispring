@@ -1,0 +1,51 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: booking-service
+  datasource:
+    url: jdbc:h2:mem:bookings;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ''
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+app:
+  security:
+    jwt-secret-base64: ${JWT_SECRET_BASE64}
+  demo:
+    admin-password: ${DEMO_ADMIN_PASSWORD:Admin12345!}
+    user-password: ${DEMO_USER_PASSWORD:Demo12345!}
+resilience4j:
+  retry:
+    instances:
+      hotelClient:
+        maxAttempts: 3
+        waitDuration: 200ms
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+        ignoreExceptions:
+          - org.springframework.web.client.HttpClientErrorException
+  circuitbreaker:
+    instances:
+      hotelClient:
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+logging:
+  pattern:
+    level: '%5p [traceId=%X{traceId}]'

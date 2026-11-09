@@ -1,0 +1,27 @@
+
+name: Maven tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Generate test JWT secret
+        run: echo "JWT_SECRET_BASE64=$(openssl rand -base64 48 | tr -d '\n')" >> "$GITHUB_ENV"
+
+      - name: Build and test
+        run: mvn -B clean verify
